@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var TrackSchema = new Schema({
   artist: String,
-  album: String,
+  title: String,
   description: String
 });
 

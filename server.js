@@ -86,7 +86,7 @@ app.put('/api/tracks/:id', function (req, res) {
       res.status(500).json({ error: err.message });
     } else {
       //update the track's attributes
-      foundTrack.album = req.body.album;
+      foundTrack.title = req.body.title;
       foundTrack.artist = req.body.artist;
       foundTrack.description = req.body.description;
 

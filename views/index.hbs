@@ -20,7 +20,7 @@
   <div class="well">
     <div class="container">
       <div class="page-header">
-        <h1>To Spotify<small>listen!</small></h1>
+        <h1>Spotify <small> Notes</small></h1>
       </div>
     </div>
   </div>
@@ -34,6 +34,9 @@
         <form class="form-inline" id="create-track">
           <div class="form-group">
             <input type="text" name="artist" class="form-control" placeholder="Artist" autofocus>
+          </div>
+          <div class="form-group">
+            <input type="text" name="title" class="form-control" placeholder="Title">
           </div>
           <div class="form-group">
             <input type="text" name="description" class="form-control" placeholder="Description">
@@ -54,7 +57,10 @@
 
                 <!-- track label (artist) -->
                 <span class="label label-default">\{{artist}}</span>
-                
+
+                <!-- track title -->
+                \{{title}}
+                : 
                 <!-- track description -->
                 \{{description}}
 
@@ -76,6 +82,9 @@
                   <form class="form-inline update-track">
                     <div class="form-group">
                       <input type="text" name="artist" class="form-control" placeholder="Artist" value="\{{artist}}">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" name="title" class="form-control" placeholder="Title" value="\{{title}}">
                     </div>
                     <div class="form-group">
                       <input type="text" name="description" class="form-control" placeholder="Description" value="\{{description}}">
