@@ -1,12 +1,14 @@
 // require express and other modules
-var express = require('express'),
+var fs = require('fs'),
+    express = require('express'),
     hbs = require('hbs'),
     app = express(),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
-hbs.registerPartial('header', 'header.hbs');
-// hbs.registerPartial('footer', 'footer');
+hbs.registerPartial('header', fs.readFileSync(__dirname + '/header.hbs', 'utf8'));
+hbs.registerPartial('footer', fs.readFileSync(__dirname + '/footer.hbs', 'utf8'));
+// hbs.registerPartial('search', fs.readFileSync(__dirname + '/search.hbs', 'utf8'));
 hbs.registerPartials(__dirname + '/views/partials');
 
 // configure bodyParser (for receiving form data)
@@ -18,7 +20,6 @@ app.use(express.static(__dirname + '/public'));
 // set view engine to hbs (handlebars)
 app.set('view engine', 'hbs');
 app.engine('hbs', require('hbs').__express);
-
 
 // connect to mongodb
 mongoose.connect('mongodb://localhost/spotify-app');

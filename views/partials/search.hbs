@@ -1,0 +1,23 @@
+        <div id="results">
+          
+          <!-- handlebars template -->
+          <script id="songs-template" type="text/x-handlebars-template">
+            {{#each songs}}
+              <div class="row">
+                <div class="col-xs-4">
+                  {{#if album.images.[0]}}
+                    <img src="{{album.images.[0].url}}" class="img-responsive">
+                  {{/if}}
+                </div>
+                <div class="col-xs-8">
+                  <p><strong>{{name}}</strong> by {{artists.[0].name}}</p>
+                  <p><a href="{{preview_url}}" target="_blank" class="btn btn-sm btn-default">Preview <span class="glyphicon glyphicon-play"></span></a></p>
+                </div>
+              </div>
+              <hr>
+            {{else}}
+              <p class="text-center">No results</p>
+            {{/each}}
+          </script>
+        
+        </div>
