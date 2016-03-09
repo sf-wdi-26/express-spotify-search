@@ -1,27 +1,22 @@
 {
-  "name": "express-todo-app",
+  "name": "express-spotify",
   "version": "0.0.0",
-  "description": "",
+  "description": "SCRUD Your Own Spotify Song API",
   "main": "server.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/sf-wdi-24/express-todo-app.git"
+    "url": "https://github.com/sf-wdi-26/express-spotify.git"
   },
-  "author": "",
+  "author": "Ben Hulan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sf-wdi-24/express-todo-app/issues"
+    "url": "https://github.com/sf-wdi-26/express-spotify/issues"
   },
-  "homepage": "https://github.com/sf-wdi-24/express-todo-app",
+  "homepage": "https://github.com/sf-wdi-26/express-spotify",
   "dependencies": {
     "body-parser": "^1.14.1",
-    "chai": "^3.4.0",
     "express": "^4.13.3",
     "hbs": "^4.0.0",
-    "mocha": "^2.3.3",
     "request": "^2.65.0"
   }
 }
