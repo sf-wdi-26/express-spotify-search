@@ -2,122 +2,122 @@
 $(function() {
 
   // base API route
-  var baseUrl = '/api/todos';
+  var baseUrl = '/api/tracks';
 
-  // array to hold todo data from API
-  var allTodos = [];
+  // array to hold track data from API
+  var allTracks = [];
 
-  // element to display list of todos
-  var $todosList = $('#todos-list');
+  // element to display list of tracks
+  var $tracksList = $('#tracks-list');
 
-  // form to create new todo
-  var $createTodo = $('#create-todo');
+  // form to create new track
+  var $createTrack = $('#create-track');
 
   // compile handlebars template
-  var source = $('#todos-template').html();
+  var source = $('#tracks-template').html();
   var template = Handlebars.compile(source);
 
-  // helper function to render all todos to view
-  // note: we empty and re-render the collection each time our todo data changes
+  // helper function to render all tracks to view
+  // note: we empty and re-render the collection each time our track data changes
   var render = function() {
-    // empty existing todos from view
-    $todosList.empty();
+    // empty existing tracks from view
+    $tracksList.empty();
 
-    // pass `allTodos` into the template function
-    var todosHtml = template({ todos: allTodos });
+    // pass `allTracks` into the template function
+    var tracksHtml = template({ tracks: allTracks });
 
     // append html to the view
-    $todosList.append(todosHtml);
+    $tracksList.append(tracksHtml);
   };
 
-  // GET all todos on page load
+  // GET all tracks on page load
   $.get(baseUrl, function (data) {
     console.log(data);
 
-    // set `allTodos` to todo data from API
-    allTodos = data.todos;
+    // set `allTracks` to track data from API
+    allTracks = data.tracks;
 
-    // render all todos to view
+    // render all tracks to view
     render();
   });
 
   // listen for submit even on form
-  $createTodo.on('submit', function (event) {
+  $createTrack.on('submit', function (event) {
     event.preventDefault();
 
     // serialze form data
-    var newTodo = $(this).serialize();
+    var newTrack = $(this).serialize();
 
-    // POST request to create new todo
-    $.post(baseUrl, newTodo, function (data) {
+    // POST request to create new track
+    $.post(baseUrl, newTrack, function (data) {
       console.log(data);
 
-      // add new todo to `allTodos`
-      allTodos.push(data);
+      // add new track to `allTracks`
+      allTracks.push(data);
 
-      // render all todos to view
+      // render all tracks to view
       render();
     });
 
     // reset the form
-    $createTodo[0].reset();
-    $createTodo.find('input').first().focus();
+    $createTrack[0].reset();
+    $createTrack.find('input').first().focus();
   });
 
-  // add event-handlers to todos for updating/deleting
-  $todosList
+  // add event-handlers to tracks for updating/deleting
+  $tracksList
 
-    // for update: submit event on `.update-todo` form
-    .on('submit', '.update-todo', function (event) {
+    // for update: submit event on `.update-track` form
+    .on('submit', '.update-track', function (event) {
       event.preventDefault();
       
-      // find the todo's id (stored in HTML as `data-id`)
-      var todoId = $(this).closest('.todo').attr('data-id');
+      // find the track's id (stored in HTML as `data-id`)
+      var trackId = $(this).closest('.track').attr('data-id');
 
-      // find the todo to update by its id
-      var todoToUpdate = allTodos.filter(function (todo) {
-        return todo._id == todoId;
+      // find the track to update by its id
+      var trackToUpdate = allTracks.filter(function (track) {
+        return track._id == trackId;
       })[0];
 
       // serialze form data
-      var updatedTodo = $(this).serialize();
+      var updatedTrack = $(this).serialize();
 
-      // PUT request to update todo
+      // PUT request to update track
       $.ajax({
         type: 'PUT',
-        url: baseUrl + '/' + todoId,
-        data: updatedTodo,
+        url: baseUrl + '/' + trackId,
+        data: updatedTrack,
         success: function(data) {
-          // replace todo to update with newly updated version (data)
-          allTodos.splice(allTodos.indexOf(todoToUpdate), 1, data);
+          // replace track to update with newly updated version (data)
+          allTracks.splice(allTracks.indexOf(trackToUpdate), 1, data);
 
-          // render all todos to view
+          // render all tracks to view
           render();
         }
       });
     })
     
-    // for delete: click event on `.delete-todo` button
-    .on('click', '.delete-todo', function (event) {
+    // for delete: click event on `.delete-track` button
+    .on('click', '.delete-track', function (event) {
       event.preventDefault();
 
-      // find the todo's id (stored in HTML as `data-id`)
-      var todoId = $(this).closest('.todo').attr('data-id');
+      // find the track's id (stored in HTML as `data-id`)
+      var trackId = $(this).closest('.track').attr('data-id');
 
-      // find the todo to delete by its id
-      var todoToDelete = allTodos.filter(function (todo) {
-        return todo._id == todoId;
+      // find the track to delete by its id
+      var trackToDelete = allTracks.filter(function (track) {
+        return track._id == trackId;
       })[0];
 
-      // DELETE request to delete todo
+      // DELETE request to delete track
       $.ajax({
         type: 'DELETE',
-        url: baseUrl + '/' + todoId,
+        url: baseUrl + '/' + trackId,
         success: function(data) {
-          // remove deleted todo from all todos
-          allTodos.splice(allTodos.indexOf(todoToDelete), 1);
+          // remove deleted track from all tracks
+          allTracks.splice(allTracks.indexOf(trackToDelete), 1);
 
-          // render all todos to view
+          // render all tracks to view
           render();
         }
       });

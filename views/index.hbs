@@ -12,7 +12,7 @@
   <!-- custom styles -->
   <link rel="stylesheet" type="text/css" href="styles/main.css">
 
-  <title>Express To Do App</title>
+  <title>Express Spotify App</title>
 </head>
 <body>
 
@@ -20,7 +20,7 @@
   <div class="well">
     <div class="container">
       <div class="page-header">
-        <h1>To Do <small>get it done!</small></h1>
+        <h1>To Spotify<small>listen!</small></h1>
       </div>
     </div>
   </div>
@@ -30,32 +30,32 @@
     <div class="row">
       <div class="col-md-12">
         
-        <!-- new todo form-->
-        <form class="form-inline" id="create-todo">
+        <!-- new track form-->
+        <form class="form-inline" id="create-track">
           <div class="form-group">
-            <input type="text" name="task" class="form-control" placeholder="Task" autofocus>
+            <input type="text" name="artist" class="form-control" placeholder="Artist" autofocus>
           </div>
           <div class="form-group">
             <input type="text" name="description" class="form-control" placeholder="Description">
           </div>
           <div class="form-group">
-            <input type="submit" class="btn btn-default" value="Add To Do">
+            <input type="submit" class="btn btn-default" value="Add Track">
           </div>
         </form>
         <br>
 
-        <!-- list of todos -->
-        <ul class="list-group" id="todos-list">
+        <!-- list of tracks -->
+        <ul class="list-group" id="tracks-list">
           
           <!-- handlebars template -->
-          <script id="todos-template" type="text/x-handlebars-template">
-            \{{#each todos}}
-              <li class="list-group-item todo" data-id="\{{_id}}">
+          <script id="tracks-template" type="text/x-handlebars-template">
+            \{{#each tracks}}
+              <li class="list-group-item track" data-id="\{{_id}}">
 
-                <!-- todo label (task) -->
-                <span class="label label-default">\{{task}}</span>
+                <!-- track label (artist) -->
+                <span class="label label-default">\{{artist}}</span>
                 
-                <!-- todo description -->
+                <!-- track description -->
                 \{{description}}
 
                 <div class="pull-right">
@@ -64,18 +64,18 @@
                     <span class="glyphicon glyphicon-pencil"></span>
                   </a>
                   
-                  <!-- trash can icon to delete todo -->
-                   <a href="javascript:void(0)" class="delete-todo">
+                  <!-- trash can icon to delete track -->
+                   <a href="javascript:void(0)" class="delete-track">
                     <span class="glyphicon glyphicon-trash"></span>
                   </a>
                 </div>
                 
-                <!-- form to update todo -->
+                <!-- form to update track -->
                 <div class="collapse" id="update-\{{_id}}">
                   <br>
-                  <form class="form-inline update-todo">
+                  <form class="form-inline update-track">
                     <div class="form-group">
-                      <input type="text" name="task" class="form-control" placeholder="Task" value="\{{task}}">
+                      <input type="text" name="artist" class="form-control" placeholder="Artist" value="\{{artist}}">
                     </div>
                     <div class="form-group">
                       <input type="text" name="description" class="form-control" placeholder="Description" value="\{{description}}">

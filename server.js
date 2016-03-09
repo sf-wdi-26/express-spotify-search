@@ -1,7 +1,8 @@
 // require express and other modules
 var express = require('express'),
     app = express(),
-    bodyParser = require('body-parser');
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,13 +13,11 @@ app.use(express.static(__dirname + '/public'));
 // set view engine to hbs (handlebars)
 app.set('view engine', 'hbs');
 
+// connect to mongodb
+mongoose.connect('mongodb://localhost/spotify-app');
 
-// pre-seeded todo data; our "database" is an array for now
-var todos = [
-  { _id: 1, task: 'Laundry', description: 'Wash clothes' },
-  { _id: 2, task: 'Grocery Shopping', description: 'Buy dinner for this week' },
-  { _id: 3, task: 'Homework', description: 'Make this app super awesome!' }
-];
+// require Track model
+var Track = require('./models/track');
 
 
 // HOMEPAGE ROUTE
@@ -30,80 +29,92 @@ app.get('/', function (req, res) {
 
 // API ROUTES
 
-// get all todos
-app.get('/api/todos', function (req, res) {
-  // send all todos as JSON response
-  res.json({ todos: todos });
+// get all tracks
+app.get('/api/tracks', function (req, res) {
+  // find all tracks in db
+  Track.find(function(err, allTracks){
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json({ tracks: allTracks });
+    }
+  });
 });
 
-// create new todo
-app.post('/api/todos', function (req, res) {
-  // create new todo with form data (`req.body`)
-  var newTodo = req.body;
+// create new track
+app.post('/api/tracks', function (req, res) {
+  // create new track with form data (`req.body`)
+  var newTrack = new Track(req.body);
   
-  // set sequential id (last id in `todos` array + 1)
-  if (todos.length > 0) {
-    newTodo._id = todos[todos.length - 1]._id + 1;
-  } else {
-    newTodo._id = 1;
-  }
-
-  // add newTodo to `todos` array
-  todos.push(newTodo);
-
-  // send newTodo as JSON response
-  res.json(newTodo);
+  // save new track in db
+  newTrack.save(function(err, savedTrack){
+    if (err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(savedTrack);
+    }
+  });
 });
 
-// get one todo
-app.get('/api/todos/:id', function (req, res) {
-  // get todo id from url params (`req.params`)
-  var todoId = parseInt(req.params.id);
+// get one track
+app.get('/api/tracks/:id', function (req, res) {
+  // get track id from url params (`req.params`)
+  var trackId = req.params.id;
 
-  // find todo to by its id
-  var foundTodo = todos.filter(function (todo) {
-    return todo._id == todoId;
-  })[0];
+  // find track in db by its id
+  Track.findOne({ _id: trackId }, function(err, foundTrack){
+    if(err){
+      if(err.name === "CastError"){
+        res.status(404).json({ error: "Nothing found by this ID." });
+      } else {
+        res.status(500).json({ error: err.message });
+      }
+    } else {
+      res.json(foundTrack);
+    }
+  });
+});
+ 
+// update track
+app.put('/api/tracks/:id', function (req, res) {
+  // get track id from url params (`req.params`)
+  var trackId = req.params.id;
 
-  // send foundTodo as JSON response
-  res.json(foundTodo);
+  // find track in db by its id
+  Track.findOne({ _id: trackId }, function(err, foundTrack){
+    if(err) {
+      res.status(500).json({ error: err.message });
+    } else {
+      //update the track's attributes
+      foundTrack.album = req.body.album;
+      foundTrack.artist = req.body.artist;
+      foundTrack.description = req.body.description;
+
+      // save updated track in db
+      foundTrack.save(function(err, savedTrack){
+        if (err) {
+          res.status(500).json({ error: err.message });
+        } else {
+          res.json(savedTrack);
+        }
+      });
+    }
+  });
 });
 
-// update todo
-app.put('/api/todos/:id', function (req, res) {
-  // get todo id from url params (`req.params`)
-  var todoId = parseInt(req.params.id);
+// delete track
+app.delete('/api/tracks/:id', function (req, res) {
+  // get track id from url params (`req.params`)
+  var trackId = req.params.id;
 
-  // find todo to update by its id
-  var todoToUpdate = todos.filter(function (todo) {
-    return todo._id == todoId;
-  })[0];
-
-  // update the todo's task
-  todoToUpdate.task = req.body.task;
-
-  // update the todo's description
-  todoToUpdate.description = req.body.description;
-
-  // send back updated todo
-  res.json(todoToUpdate);
-});
-
-// delete todo
-app.delete('/api/todos/:id', function (req, res) {
-  // get todo id from url params (`req.params`)
-  var todoId = parseInt(req.params.id);
-
-  // find todo to delete by its id
-  var todoToDelete = todos.filter(function (todo) {
-    return todo._id == todoId;
-  })[0];
-  
-  // remove todo from `todos` array
-  todos.splice(todos.indexOf(todoToDelete), 1);
-  
-  // send back deleted todo
-  res.json(todoToDelete);
+  // find track in db and remove
+  Track.findOneAndRemove({ _id: trackId }, function(err, deletedTrack){
+    if(err){
+      res.status(500).json({ error: err.message });
+    } else {
+      res.json(deletedTrack);
+    }
+  });
 });
 
 
