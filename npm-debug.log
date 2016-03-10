@@ -1,0 +1,40 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/Users/benhulan/.nvm/v0.10.35/bin/npm', 'start' ]
+2 info using npm@3.3.9
+3 info using node@v0.10.35
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info lifecycle express-spotify@0.0.0~prestart: express-spotify@0.0.0
+6 silly lifecycle express-spotify@0.0.0~prestart: no script for prestart, continuing
+7 info lifecycle express-spotify@0.0.0~start: express-spotify@0.0.0
+8 verbose lifecycle express-spotify@0.0.0~start: unsafe-perm in lifecycle true
+9 verbose lifecycle express-spotify@0.0.0~start: PATH: /Users/benhulan/.nvm/v0.10.35/lib/node_modules/npm/bin/node-gyp-bin:/Users/benhulan/Developer/GA/dev-futuretrash/express-tospotify/node_modules/.bin:/usr/local/heroku/bin:/Users/benhulan/.nvm/v0.10.35/bin:/Users/benhulan/.rbenv/shims:/bin:/sbin:/usr/bin:usr/local/sbin:/usr/local/bin:/usr/local/bin:/usr/local/git/bin:/usr/bin/vlt/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/git/bin:/Applications/adt-bundle-mac-x86_64-20131030/sdk//tools:/Applications/adt-bundle-mac-x86_64-20131030/sdk//platform-tools:/Applications/Postgres.app/Contents/Versions/9.4/bin
+10 verbose lifecycle express-spotify@0.0.0~start: CWD: /Users/benhulan/Developer/GA/dev-futuretrash/express-tospotify
+11 silly lifecycle express-spotify@0.0.0~start: Args: [ '-c', 'node server.js' ]
+12 silly lifecycle express-spotify@0.0.0~start: Returned: code: 8  signal: null
+13 info lifecycle express-spotify@0.0.0~start: Failed to exec start script
+14 verbose stack Error: express-spotify@0.0.0 start: `node server.js`
+14 verbose stack Exit status 8
+14 verbose stack     at EventEmitter.<anonymous> (/Users/benhulan/.nvm/v0.10.35/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+14 verbose stack     at EventEmitter.emit (events.js:98:17)
+14 verbose stack     at ChildProcess.<anonymous> (/Users/benhulan/.nvm/v0.10.35/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at ChildProcess.emit (events.js:98:17)
+14 verbose stack     at maybeClose (child_process.js:766:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:833:5)
+15 verbose pkgid express-spotify@0.0.0
+16 verbose cwd /Users/benhulan/Developer/GA/dev-futuretrash/express-tospotify
+17 error Darwin 14.5.0
+18 error argv "node" "/Users/benhulan/.nvm/v0.10.35/bin/npm" "start"
+19 error node v0.10.35
+20 error npm  v3.3.9
+21 error code ELIFECYCLE
+22 error express-spotify@0.0.0 start: `node server.js`
+22 error Exit status 8
+23 error Failed at the express-spotify@0.0.0 start script 'node server.js'.
+23 error This is most likely a problem with the express-spotify package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     node server.js
+23 error You can get their info via:
+23 error     npm owner ls express-spotify
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
