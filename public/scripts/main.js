@@ -1,5 +1,6 @@
 // wait for DOM to load before running JS
 $(function() {
+  var songHtml;
 
   // form to search spotify API
   var $spotifySearch = $('#spotify-search');
@@ -40,13 +41,14 @@ $(function() {
       console.log(trackResults);
 
       // hide loading gif
-      setTimeout($loading.hide(), 3000);
+      $loading.hide();
 
       // pass in data to render in the template
-      var trackHtml = template1({ tracks: trackResults });
+      var songHtml = template1({ songs: trackResults });
 
       // append html to the view
-      $results.append(trackHtml);
+      console.log(songHtml);
+      $results.append(songHtml);
     });
 
     // reset the form
@@ -73,7 +75,7 @@ $(function() {
 
   // helper function to render all tracks to view
   // note: we empty and re-render the collection each time our track data changes
-  var render = function() {
+ var render = function() {
     // empty existing tracks from view
     $tracksList.empty();
 
@@ -120,7 +122,6 @@ $(function() {
 
   // add event-handlers to tracks for updating/deleting
   $tracksList
-
     // for update: submit event on `.update-track` form
     .on('submit', '.update-track', function (event) {
       event.preventDefault();

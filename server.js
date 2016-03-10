@@ -3,13 +3,9 @@ var fs = require('fs'),
     express = require('express'),
     hbs = require('hbs'),
     app = express(),
+    path = require('path'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
-
-hbs.registerPartial('header', fs.readFileSync(__dirname + '/header.hbs', 'utf8'));
-hbs.registerPartial('footer', fs.readFileSync(__dirname + '/footer.hbs', 'utf8'));
-// hbs.registerPartial('search', fs.readFileSync(__dirname + '/search.hbs', 'utf8'));
-hbs.registerPartials(__dirname + '/views/partials');
 
 // configure bodyParser (for receiving form data)
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,9 +13,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartial('header', 'header.hbs');
+hbs.registerPartial('footer', 'footer.hbs');
+hbs.registerPartial('search', 'search.hbs');
+
 // set view engine to hbs (handlebars)
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.engine('hbs', require('hbs').__express);
+
+// app.engine('hbs', require('hbs').__express);
 
 // connect to mongodb
 mongoose.connect('mongodb://localhost/spotify-app');
